@@ -1,11 +1,14 @@
 package com.msqgl.app;
 
-import com.google.gson.Gson;
 import com.msqgl.app.dao.WeddingDAO;
+import com.msqgl.app.data.Gift;
+import com.msqgl.app.data.GiftMsg;
+import com.msqgl.app.data.ResponseAjax;
 
-import static spark.Spark.after;
-import static spark.Spark.get;
-import static spark.Spark.port;
+import java.math.BigDecimal;
+import java.util.List;
+
+import static spark.Spark.*;
 
 public class Main {
 
@@ -13,9 +16,26 @@ public class Main {
 
     port(1234);
     final WeddingDAO dao = new WeddingDAO();
+
+/*
+    http://localhost:1234/getAllGift
+*/
     get("/getAllGift", (req, res) -> {
-      final Gson gson = new Gson();
-      return gson.toJson(dao.getAllGift());
+      final List<Gift> allGift = dao.getAllGift();
+      return ResponseAjax.OK(allGift).toJson();
+    });
+
+/*
+    http://localhost:1234/saveGiftMsg?idGift=1&msg=Auguri!!&sender=Miky&amount=70
+*/
+    get("/saveGiftMsg", (req, res) -> {
+      final GiftMsg giftMsg = new GiftMsg();
+      giftMsg.setIdGift(req.queryParams("idGift"));
+      giftMsg.setMsg(req.queryParams("msg"));
+      giftMsg.setSender(req.queryParams("sender"));
+      giftMsg.setAmount(new BigDecimal(req.queryParams("amount")));
+      dao.saveGiftMsg(giftMsg);
+      return ResponseAjax.OK().toJson();
     });
 
     after((req, res) -> {

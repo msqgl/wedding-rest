@@ -1,6 +1,7 @@
 package com.msqgl.app.dao;
 
 import com.msqgl.app.data.Gift;
+import com.msqgl.app.data.GiftMsg;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 public class WeddingDAO {
 
   private String QUERY_SELECT_ALL_GIFT = "SELECT * FROM GIFT";
+  private String QUERY_INSERT_GIFT_MSG = "INSERT INTO `wedding`.`giftmsg` (`ID_GIFT`, `MSG`, `SENDER`, `AMOUNT`) VALUES ('%s', '%s', '%s', '%s');";
 
   public List<Gift> getAllGift() throws SQLException, ClassNotFoundException {
     final Statement statement = getStatement();
@@ -27,6 +29,17 @@ public class WeddingDAO {
       returnList.add(gift);
     }
     return returnList;
+  }
+
+  public void saveGiftMsg(final GiftMsg giftMsg) throws SQLException, ClassNotFoundException {
+    final Statement statement = getStatement();
+    final String query = String.format(QUERY_INSERT_GIFT_MSG,
+        giftMsg.getIdGift(),
+        giftMsg.getMsg(),
+        giftMsg.getSender(),
+        giftMsg.getAmount()
+    );
+    statement.executeUpdate(query);
   }
 
   private Statement getStatement() throws SQLException, ClassNotFoundException {
