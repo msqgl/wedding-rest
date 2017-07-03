@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class GiftMsg implements Serializable {
+public class Msg implements Serializable {
 
   private String idMsg;
   private String idGift;
