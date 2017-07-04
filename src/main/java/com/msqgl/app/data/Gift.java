@@ -2,16 +2,30 @@ package com.msqgl.app.data;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+@Entity
 public class Gift implements Serializable {
 
+  @Column(name = "ID_GIFT")
   private String idGift;
+
+  @Column(name = "TITLE")
   private String title;
+
+  @Column(name = "DESCRIPTION")
   private String description;
+
+  @Column(name = "IMG_PATH")
   private String imgPath;
+
+  @Column(name = "TOTAL_PRICE")
   private BigDecimal totalPrice;
+
+  @Column(name = "CONSUMED_PRICE")
   private BigDecimal consumedPrice;
 
   public String getIdGift() {
