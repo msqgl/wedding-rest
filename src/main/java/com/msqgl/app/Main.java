@@ -2,7 +2,7 @@ package com.msqgl.app;
 
 import com.msqgl.app.data.Gift;
 import com.msqgl.app.data.Msg;
-import com.msqgl.app.data.ResponseAjax;
+import com.msqgl.app.data.Response;
 import com.msqgl.app.service.WeddingService;
 
 import java.math.BigDecimal;
@@ -18,12 +18,14 @@ public class Main {
     port(1234);
     final WeddingService service = new WeddingService();
 
+    get("/", (request, response) -> "Hello Raspberry!");
+
 /*
     http://localhost:1234/getAllGift
 */
     get("/getAllGift", (req, res) -> {
       final List<Gift> allGift = service.getAllGift();
-      return ResponseAjax.OK(allGift).toJson();
+      return Response.OK(allGift).toJson();
     });
 
 /*
@@ -36,7 +38,7 @@ public class Main {
       msg.setSender(req.queryParams("sender"));
       msg.setAmount(new BigDecimal(req.queryParams("amount")));
       service.saveGiftMsg(msg);
-      return ResponseAjax.OK().toJson();
+      return Response.OK().toJson();
     });
 
     put("/updateGift", (request, response) -> {
