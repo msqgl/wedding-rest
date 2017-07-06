@@ -4,8 +4,11 @@
 - Maven 3
     - spark-core
     - mysql-connector-java
+    - persistence-api
     - commons-lang3
+    - commons-beanutils
     - gson
+    - junit
 - MySQL 5.6
 
 ## Configure Database ##

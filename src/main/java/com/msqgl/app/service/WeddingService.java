@@ -22,7 +22,12 @@ public class WeddingService {
     return giftDao.getAllGift();
   }
 
-  public void saveGiftMsg(final Msg msg) throws SQLException, ClassNotFoundException {
-    msgDao.saveGiftMsg(msg);
+  public void saveMsg(final Msg msg) throws SQLException, ClassNotFoundException {
+    msgDao.saveMsg(msg);
   }
+
+  public List<Msg> getAllMsg() throws SQLException, ClassNotFoundException {
+    return msgDao.getAllMsg();
+  }
+
 }

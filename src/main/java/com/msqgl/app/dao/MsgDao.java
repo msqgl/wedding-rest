@@ -18,7 +18,7 @@ public class MsgDao extends BaseDao {
     return mapRersultSetToObject(resultSet, Msg.class);
   }
 
-  public void saveGiftMsg(final Msg msg) throws SQLException, ClassNotFoundException {
+  public void saveMsg(final Msg msg) throws SQLException, ClassNotFoundException {
     final Statement statement = getStatement();
     final String query = String.format(QUERY_INSERT_GIFT_MSG,
         msg.getIdGift(),
