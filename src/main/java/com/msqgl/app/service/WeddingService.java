@@ -5,6 +5,7 @@ import com.msqgl.app.dao.MsgDao;
 import com.msqgl.app.data.Gift;
 import com.msqgl.app.data.Msg;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -22,12 +23,26 @@ public class WeddingService {
     return giftDao.getAllGift();
   }
 
-  public void saveMsg(final Msg msg) throws SQLException, ClassNotFoundException {
-    msgDao.saveMsg(msg);
-  }
-
   public List<Msg> getAllMsg() throws SQLException, ClassNotFoundException {
     return msgDao.getAllMsg();
+  }
+
+  public void saveGiftMsg(final String idGift,
+                          final String msg,
+                          final String sender,
+                          final BigDecimal amount) throws SQLException, ClassNotFoundException {
+    final Gift gift = giftDao.getGiftFromId(idGift);
+    if (gift != null) {
+      final Msg msgObj = new Msg();
+      msgObj.setIdGift(idGift);
+      msgObj.setMsg(msg);
+      msgObj.setSender(sender);
+      msgObj.setAmount(amount);
+      msgDao.saveMsg(msgObj);
+      giftDao.updateConsumedPrice(idGift, amount.add(gift.getConsumedPrice()));
+    } else {
+      throw new IllegalStateException(String.format("Gift with idGift=%s not found.", idGift));
+    }
   }
 
 }

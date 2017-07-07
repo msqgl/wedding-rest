@@ -4,12 +4,13 @@ import com.msqgl.app.data.Gift;
 import com.msqgl.app.data.Msg;
 import com.msqgl.app.data.Response;
 import com.msqgl.app.service.WeddingService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import static spark.Spark.*;
 
@@ -34,26 +35,20 @@ public class Main {
       return Response.OK(allGift).toJson();
     });
 
-    put("/saveMsg", (req, res) -> {
-      final String idGift = req.params("idGift");
-      final String msgString = req.queryParams("msg");
-      final Msg msg = new Msg();
-      final String sender = req.params("sender");
-      final BigDecimal amount = new BigDecimal(req.params("amount"));
-      msg.setIdGift(idGift);
-      msg.setMsg(msgString);
-      msg.setSender(sender);
-      msg.setAmount(amount);
+    put("/saveGiftMsg", (request, response) -> {
+      final String idGift = request.queryParams("idGift");
+      final String msg = request.queryParams("msg");
+      final String sender = request.queryParams("sender");
+      final String amount = request.queryParams("amount");
 
-      service.saveMsg(msg);
-      return Response.OK().toJson();
-    });
-
-    put("/updateGift", (request, response) -> {
-      final Map<String, String> params = request.params();
-      final String idGift = params.get("idGift");
-      final String giftAmount = params.get("giftAmount");
-      return null;
+      Response resp;
+      if (validateString(idGift, sender, amount)) {
+        service.saveGiftMsg(idGift, msg, sender, new BigDecimal(amount));
+        resp = Response.OK();
+      } else {
+        resp = Response.KO();
+      }
+      return resp.toJson();
     });
 
     get("getAllMsg", (request, response) -> {
@@ -61,9 +56,41 @@ public class Main {
       return Response.OK(allMsg).toJson();
     });
 
+    before((request, response) -> {
+      LOG.info("Called {}", request.uri());
+      final Set<String> queryParams = request.queryParams();
+      StringBuilder stringBuilder = new StringBuilder();
+      for (String queryParam : queryParams) {
+        if (stringBuilder.length() > 0) {
+          stringBuilder.append(", ");
+        }
+        stringBuilder.append(queryParam);
+        stringBuilder.append(" '");
+        stringBuilder.append(request.queryParams(queryParam));
+        stringBuilder.append("'");
+      }
+      if (stringBuilder.length() > 0) {
+        LOG.info("Request parameters: {}", stringBuilder.toString());
+      }
+    });
+
     after((req, res) -> {
       res.type("application/json");
     });
+
+    exception(Exception.class, (e, request, response) -> {
+      LOG.error("Exception", e);
+    });
+
+  }
+
+  private static boolean validateString(String... strings) {
+    for (String str : strings) {
+      if (StringUtils.isEmpty(str)) {
+        return Boolean.FALSE;
+      }
+    }
+    return Boolean.TRUE;
   }
 
 }

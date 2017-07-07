@@ -9,8 +9,8 @@ import java.util.List;
 
 public class MsgDao extends BaseDao {
 
-  private String QUERY_INSERT_GIFT_MSG = "INSERT INTO `wedding`.`giftmsg` (`ID_GIFT`, `MSG`, `SENDER`, `AMOUNT`) VALUES ('%s', '%s', '%s', '%s');";
-  private String QUERY_SELECT_ALL_GIFT_MSG = "SELECT * FROM GIFTMSG";
+  private static final String QUERY_INSERT_GIFT_MSG = "INSERT INTO `wedding`.`giftmsg` (`ID_GIFT`, `MSG`, `SENDER`, `AMOUNT`) VALUES ('%s', '%s', '%s', '%s');";
+  private static final String QUERY_SELECT_ALL_GIFT_MSG = "SELECT * FROM GIFTMSG";
 
   public List getAllMsg() throws SQLException, ClassNotFoundException {
     final Statement statement = getStatement();
