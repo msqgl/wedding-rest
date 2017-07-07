@@ -35,7 +35,7 @@ public class Main {
       return Response.OK(allGift).toJson();
     });
 
-    put("/saveGiftMsg", (request, response) -> {
+    post("/saveGiftMsg", (request, response) -> {
       final String idGift = request.queryParams("idGift");
       final String msg = request.queryParams("msg");
       final String sender = request.queryParams("sender");
@@ -76,6 +76,7 @@ public class Main {
 
     after((req, res) -> {
       res.type("application/json");
+      res.header("Access-Control-Allow-Origin", "*")  ;
     });
 
     exception(Exception.class, (e, request, response) -> {
