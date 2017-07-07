@@ -27,7 +27,7 @@
         </configuration>
       </plugin>
     </plugins>
-    <finalName>wedding-site</finalName>
+    <finalName>wedding-rest</finalName>
   </build>
 
   <dependencies>
@@ -82,6 +82,5 @@
     </dependency>
 
   </dependencies>
-
 
 </project>
