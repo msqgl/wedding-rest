@@ -39,7 +39,8 @@ public class WeddingService {
       msgObj.setSender(sender);
       msgObj.setAmount(amount);
       msgDao.saveMsg(msgObj);
-      giftDao.updateConsumedPrice(idGift, amount.add(gift.getConsumedPrice()));
+      final BigDecimal newConsumedPrice = gift.getConsumedPrice() != null ? amount.add(gift.getConsumedPrice()) : amount;
+      giftDao.updateConsumedPrice(idGift, newConsumedPrice);
     } else {
       throw new IllegalStateException(String.format("Gift with idGift=%s not found.", idGift));
     }
