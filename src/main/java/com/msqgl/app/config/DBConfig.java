@@ -20,10 +20,15 @@ public class DBConfig {
   @Bean
   public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    dataSource.setDriverClassName(env.getRequiredProperty("db.driver"));
-    dataSource.setUrl(env.getRequiredProperty("db.url"));
-    dataSource.setUsername(env.getRequiredProperty("db.user"));
-    dataSource.setPassword(env.getRequiredProperty("db.password"));
+    final String driver = env.getRequiredProperty("db.driver");
+    final String url = env.getRequiredProperty("db.url");
+    final String database = env.getRequiredProperty("db.database");
+    final String username = env.getRequiredProperty("db.user");
+    final String password = env.getRequiredProperty("db.password");
+    dataSource.setDriverClassName(driver);
+    dataSource.setUrl(url + "/" + database);
+    dataSource.setUsername(username);
+    dataSource.setPassword(password);
     return dataSource;
   }
 
