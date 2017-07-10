@@ -1,54 +1,36 @@
 package com.msqgl.app.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import javax.sql.DataSource;
 
 @Configuration
-@PropertySource("classpath:rest.properties")
+@PropertySource(value = {"classpath:rest.properties"})
 public class DBConfig {
 
-  @Value("${db.hostname}")
-  private String dbHostname;
+  @Autowired
+  private Environment env;
 
-  @Value("${db.name}")
-  private String dbName;
-
-  @Value("${db.user}")
-  private String dbUser;
-
-  @Value("${db.password}")
-  private String dbPassword;
-
-  public String getDbHostname() {
-    return dbHostname;
+  @Bean
+  public DataSource dataSource() {
+    DriverManagerDataSource dataSource = new DriverManagerDataSource();
+    dataSource.setDriverClassName(env.getRequiredProperty("db.driver"));
+    dataSource.setUrl(env.getRequiredProperty("db.url"));
+    dataSource.setUsername(env.getRequiredProperty("db.user"));
+    dataSource.setPassword(env.getRequiredProperty("db.password"));
+    return dataSource;
   }
 
-  public void setDbHostname(String dbHostname) {
-    this.dbHostname = dbHostname;
-  }
-
-  public String getDbName() {
-    return dbName;
-  }
-
-  public void setDbName(String dbName) {
-    this.dbName = dbName;
-  }
-
-  public String getDbUser() {
-    return dbUser;
-  }
-
-  public void setDbUser(String dbUser) {
-    this.dbUser = dbUser;
-  }
-
-  public String getDbPassword() {
-    return dbPassword;
-  }
-
-  public void setDbPassword(String dbPassword) {
-    this.dbPassword = dbPassword;
+  @Bean
+  public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+    jdbcTemplate.setResultsMapCaseInsensitive(true);
+    return jdbcTemplate;
   }
 }
