@@ -1,6 +1,7 @@
 package com.msqgl.app.dao;
 
-import com.msqgl.app.data.Gift;
+import com.msqgl.app.model.Gift;
+import org.springframework.stereotype.Repository;
 import spark.utils.CollectionUtils;
 
 import java.math.BigDecimal;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+@Repository
 public class GiftDao extends BaseDao {
 
   private static final String QUERY_SELECT_ALL_GIFT = "SELECT * FROM GIFT";

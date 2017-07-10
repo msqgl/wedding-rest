@@ -1,6 +1,7 @@
 package com.msqgl.app.dao;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class BaseDao<T> {
 
   private static final String COM_MYSQL_JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";

@@ -1,12 +1,14 @@
 package com.msqgl.app.dao;
 
-import com.msqgl.app.data.Msg;
+import com.msqgl.app.model.Msg;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+@Repository
 public class MsgDao extends BaseDao {
 
   private static final String QUERY_INSERT_GIFT_MSG = "INSERT INTO GIFTMSG (ID_GIFT, MSG, SENDER, AMOUNT) VALUES ('%s', '%s', '%s', '%s');";

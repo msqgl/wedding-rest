@@ -1,4 +1,4 @@
-package com.msqgl.app.data;
+package com.msqgl.app.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 

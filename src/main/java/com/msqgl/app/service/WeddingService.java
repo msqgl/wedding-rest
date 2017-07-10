@@ -2,22 +2,23 @@ package com.msqgl.app.service;
 
 import com.msqgl.app.dao.GiftDao;
 import com.msqgl.app.dao.MsgDao;
-import com.msqgl.app.data.Gift;
-import com.msqgl.app.data.Msg;
+import com.msqgl.app.model.Gift;
+import com.msqgl.app.model.Msg;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
+@Service
 public class WeddingService {
 
+  @Autowired
   private GiftDao giftDao;
-  private MsgDao msgDao;
 
-  public WeddingService() {
-    this.giftDao = new GiftDao();
-    this.msgDao = new MsgDao();
-  }
+  @Autowired
+  private MsgDao msgDao;
 
   public List<Gift> getAllGift() throws SQLException, ClassNotFoundException {
     return giftDao.getAllGift();

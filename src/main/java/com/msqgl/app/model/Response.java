@@ -1,4 +1,4 @@
-package com.msqgl.app.data;
+package com.msqgl.app.model;
 
 import com.google.gson.Gson;
 

@@ -1,6 +1,6 @@
 package com.msqgl.app.dao;
 
-import com.msqgl.app.data.Msg;
+import com.msqgl.app.model.Msg;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
