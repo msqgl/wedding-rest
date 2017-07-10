@@ -1,6 +1,8 @@
 package com.msqgl.app.dao;
 
+import com.msqgl.app.config.DBConfig;
 import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Column;
@@ -15,15 +17,23 @@ import java.util.List;
 public class BaseDao<T> {
 
   private static final String COM_MYSQL_JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-  private static final String HOSTNAME = "localhost";
-  private static final String DB_NAME = "wedding";
-  private static final String USER = "w3dd1ng";
-  private static final String PASSWORD = "9cEmpKmY";
   private static final String URL = "jdbc:mysql://%s/%s?user=%s&password=%s";
+
+  @Autowired
+  private DBConfig dbConfig;
+
+  public DBConfig getDbConfig() {
+    return dbConfig;
+  }
+
+  public void setDbConfig(DBConfig dbConfig) {
+    this.dbConfig = dbConfig;
+  }
 
   protected Statement getStatement() throws SQLException, ClassNotFoundException {
     Class.forName(COM_MYSQL_JDBC_DRIVER);
-    final String url = String.format(URL, HOSTNAME, DB_NAME, USER, PASSWORD);
+    final String url = String.format(
+        URL, dbConfig.getDbHostname(), dbConfig.getDbName(), dbConfig.getDbUser(), dbConfig.getDbPassword());
     final Connection connection = DriverManager.getConnection(url);
     return connection.createStatement();
   }
