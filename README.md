@@ -2,13 +2,19 @@
 ## Technologies Used ##
 - Java 8
 - Maven 3
-    - spark-core
-    - mysql-connector-java
-    - persistence-api
-    - commons-lang3
-    - commons-beanutils
-    - gson
-    - junit
+    - spark-core 2.5
+    - mysql-connector-java 6.0.6
+    - persistence-api 1.0.2
+    - commons-lang3 3.6
+    - commons-beanutils 1.9.3
+    - gson 2.8.1
+    - junit 4.12
+    - slf4j-simple 1.7.21
+    - spring-core 4.3.9.RELEASE
+    - spring-context 4.3.9.RELEASE
+    - spring-jdbc 4.3.9.RELEASE
+    - spring-test 4.3.9.RELEASE
+    
 - MySQL 5.6
 
 ## Configure Database ##
