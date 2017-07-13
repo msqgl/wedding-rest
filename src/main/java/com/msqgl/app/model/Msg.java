@@ -2,27 +2,19 @@ package com.msqgl.app.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Entity
 public class Msg implements Serializable {
 
-  @Column(name = "ID_MSG")
   private String idMsg;
 
-  @Column(name = "ID_GIFT")
   private String idGift;
 
-  @Column(name = "MSG")
   private String msg;
 
-  @Column(name = "SENDER")
   private String sender;
 
-  @Column(name = "AMOUNT")
   private BigDecimal amount;
 
   public String getIdMsg() {
