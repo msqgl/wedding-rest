@@ -1,14 +1,18 @@
 package com.msqgl.app.config;
 
+import com.google.common.net.MediaType;
 import com.msqgl.app.model.Gift;
 import com.msqgl.app.model.Msg;
 import com.msqgl.app.model.Response;
 import com.msqgl.app.service.WeddingService;
 import com.msqgl.app.utils.ValidationUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import spark.Request;
 
+import java.io.BufferedOutputStream;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
@@ -50,12 +54,31 @@ public class WebConfig {
       if (stringBuilder.length() > 0) {
         LOG.info("Request parameters: {}", stringBuilder.toString());
       }
+      manageResponse(request, response);
     });
 
-    after((req, res) -> {
-      res.type("application/json");
-      res.header("Access-Control-Allow-Origin", "*");
-    });
+  }
+
+  private void manageResponse(final Request request, final spark.Response response) {
+    final String url = request.url();
+    final String[] split = url.split("\\.");
+    String respType = StringUtils.EMPTY;
+    if (split.length > 0) {
+      final String extension = split[split.length - 1];
+      switch (extension) {
+        case "json":
+          respType = MediaType.JSON_UTF_8.toString();
+          break;
+        case "pdf":
+          respType = MediaType.PDF.toString();
+          // comment this lines if you don't want to download the file
+//          final String format = new SimpleDateFormat("dd-MM-yy_hh:mm:ss").format(new Date());
+//          response.header("Content-Disposition", "attachment; " + format + "=.pdf");
+          break;
+      }
+    }
+    response.type(respType);
+    response.header("Access-Control-Allow-Origin", "*");
   }
 
   private void setupRoutes() {
@@ -68,12 +91,12 @@ public class WebConfig {
       return "Hello Log!";
     });
 
-    get("/getAllGift", (req, res) -> {
+    get("/getAllGift.json", (req, res) -> {
       final List<Gift> allGift = service.getAllGift();
       return Response.OK(allGift).toJson();
     });
 
-    post("/saveGiftMsg", (request, response) -> {
+    post("/saveGiftMsg.json", (request, response) -> {
       final String idGift = request.queryParams("idGift");
       final String msg = request.queryParams("msg");
       final String sender = request.queryParams("sender");
@@ -89,9 +112,14 @@ public class WebConfig {
       return resp.toJson();
     });
 
-    get("getAllMsg", (request, response) -> {
+    get("/getAllMsg.json", (request, response) -> {
       final List<Msg> allMsg = service.getAllMsg();
       return Response.OK(allMsg).toJson();
+    });
+
+    get("/getPdf.pdf", (request, response) -> {
+      service.createPDF(new BufferedOutputStream(response.raw().getOutputStream()));
+      return null;
     });
   }
 
