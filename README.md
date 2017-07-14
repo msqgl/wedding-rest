@@ -14,6 +14,8 @@
     - spring-context 4.3.9.RELEASE
     - spring-jdbc 4.3.9.RELEASE
     - spring-test 4.3.9.RELEASE
+    - guava 22.0
+    - itext 2.1.7
     
 - MySQL 5.6
 

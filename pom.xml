@@ -40,6 +40,8 @@
     <persistence-api.version>1.0.2</persistence-api.version>
     <mysql-connector-java.version>6.0.6</mysql-connector-java.version>
     <spark-core.version>2.5</spark-core.version>
+    <guava.version>22.0</guava.version>
+    <itext.version>2.1.7</itext.version>
   </properties>
 
   <dependencies>
@@ -116,6 +118,18 @@
       <artifactId>spring-test</artifactId>
       <version>${spring.version}</version>
       <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.lowagie</groupId>
+      <artifactId>itext</artifactId>
+      <version>${itext.version}</version>
     </dependency>
 
   </dependencies>
