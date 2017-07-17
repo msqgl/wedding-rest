@@ -34,6 +34,7 @@ public class WebConfig {
   }
 
   private void setupConfig() {
+    secure("certificate/keystore.jks", "password", null, null);
     port(1234);
   }
 

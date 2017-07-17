@@ -142,7 +142,7 @@
           <resource>
             <directory>profiles/base</directory>
             <includes>
-              <include>*</include>
+              <include>**</include>
             </includes>
           </resource>
         </resources>
