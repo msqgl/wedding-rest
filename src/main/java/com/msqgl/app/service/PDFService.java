@@ -21,6 +21,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -113,7 +114,7 @@ public class PDFService {
     }
 
     LOG.info("Totale incassato: {}", total);
-    LOG.info("Media regalo: {}", total.divide(new BigDecimal(allMsg.size())));
+    LOG.info("Media regalo: {}", total.divide(new BigDecimal(allMsg.size()), RoundingMode.HALF_UP));
     LOG.info("Numero di regali: {}" + allMsg.size());
 
     Paragraph main = new Paragraph();
@@ -121,7 +122,7 @@ public class PDFService {
     final Paragraph totale = new Paragraph("Totale incassato " + String.valueOf(total) + " €", FONT_SUBTITLE);
     main.add(totale);
     addEmptyLine(main, 1);
-    final Paragraph media = new Paragraph("Media regalo " + total.divide(new BigDecimal(allMsg.size())) + " €", FONT_SUBTITLE);
+    final Paragraph media = new Paragraph("Media regalo " + total.divide(new BigDecimal(allMsg.size()), RoundingMode.HALF_UP) + " €", FONT_SUBTITLE);
     main.add(media);
     addEmptyLine(main, 1);
     final Paragraph count = new Paragraph("Numero di regali " + allMsg.size(), FONT_SUBTITLE);
