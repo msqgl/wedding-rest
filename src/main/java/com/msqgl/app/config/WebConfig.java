@@ -34,7 +34,9 @@ public class WebConfig {
   }
 
   private void setupConfig() {
-    secure("certificate/keystore.jks", "password", null, null);
+
+    ClassLoader classLoader = getClass().getClassLoader();
+    secure("keystore.jks", "87Ykim13*n", null, null);
     port(1234);
   }
 
