@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public class GiftDao {
 
-  private static final String QUERY_SELECT_ALL_GIFT = "SELECT * FROM GIFT";
+  private static final String QUERY_SELECT_ALL_GIFT = "SELECT * FROM GIFT ORDER BY INDEX_ORDER";
   private static final String QUERY_SELECT_FROM_ID = "SELECT * FROM GIFT WHERE ID_GIFT = ?";
   private static final String QUERY_UPDATE_GIFT = "UPDATE GIFT SET CONSUMED_PRICE = ? WHERE ID_GIFT = ?";
 

@@ -115,7 +115,7 @@ public class PDFService {
 
     LOG.info("Totale incassato: {}", total);
     LOG.info("Media regalo: {}", total.divide(new BigDecimal(allMsg.size()), RoundingMode.HALF_UP));
-    LOG.info("Numero di regali: {}" + allMsg.size());
+    LOG.info("Numero di regali: {}", allMsg.size());
 
     Paragraph main = new Paragraph();
     main.setAlignment(Element.ALIGN_CENTER);

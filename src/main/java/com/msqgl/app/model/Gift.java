@@ -19,6 +19,8 @@ public class Gift implements Serializable {
 
   private BigDecimal consumedPrice;
 
+  private int indexOrder;
+
   public String getIdGift() {
     return idGift;
   }
@@ -67,6 +69,14 @@ public class Gift implements Serializable {
     this.consumedPrice = consumedPrice;
   }
 
+  public int getIndexOrder() {
+    return indexOrder;
+  }
+
+  public void setIndexOrder(int indexOrder) {
+    this.indexOrder = indexOrder;
+  }
+
   @Override
   public String toString() {
     return new ToStringBuilder(this)
@@ -76,6 +86,7 @@ public class Gift implements Serializable {
         .append("imgPath", imgPath)
         .append("totalPrice", totalPrice)
         .append("consumedPrice", consumedPrice)
+        .append("indexOrder", indexOrder)
         .toString();
   }
 }
