@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Msg implements Serializable {
 
@@ -16,6 +17,8 @@ public class Msg implements Serializable {
   private String sender;
 
   private BigDecimal amount;
+
+  private Date insertDate;
 
   public String getIdMsg() {
     return idMsg;
@@ -57,6 +60,14 @@ public class Msg implements Serializable {
     this.amount = amount;
   }
 
+  public Date getInsertDate() {
+    return insertDate;
+  }
+
+  public void setInsertDate(Date insertDate) {
+    this.insertDate = insertDate;
+  }
+
   @Override
   public String toString() {
     return new ToStringBuilder(this)
@@ -65,6 +76,7 @@ public class Msg implements Serializable {
         .append("msg", msg)
         .append("sender", sender)
         .append("amount", amount)
+        .append("insertDate", insertDate)
         .toString();
   }
 }
