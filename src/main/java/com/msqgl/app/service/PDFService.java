@@ -59,7 +59,7 @@ public class PDFService {
 
   private void addMainContent(final Document document) throws DocumentException {
     final List<Msg> allMsg = msgDao.getAllMsg();
-    PdfPTable table = new PdfPTable(4);
+    PdfPTable table = new PdfPTable(5);
     table.setWidthPercentage(100);
     table.setWidths(new int[]{20, 20, 20, 20});
     PdfPCell cell;
