@@ -146,7 +146,7 @@ public class PDFService {
   }
 
   private void addTitle(final Document document) throws DocumentException {
-    final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyy hh:mm:ss");
+    final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyy HH:mm:ss");
 
     final Date date = new Date();
     final String formattedDate = dateFormat.format(date);
