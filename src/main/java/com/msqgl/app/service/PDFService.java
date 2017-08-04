@@ -61,7 +61,7 @@ public class PDFService {
     final List<Msg> allMsg = msgDao.getAllMsg();
     PdfPTable table = new PdfPTable(5);
     table.setWidthPercentage(100);
-    table.setWidths(new int[]{20, 20, 20, 20});
+    table.setWidths(new int[]{20, 20, 20, 20, 20});
     PdfPCell cell;
 
     cell = new PdfPCell(new Phrase("Regalo", FONT_TABLE_HEADER));
