@@ -12,7 +12,7 @@ import java.util.List;
 public class MsgDao {
 
   private static final String QUERY_INSERT_GIFT_MSG = "INSERT INTO GIFTMSG (ID_GIFT, MSG, SENDER, AMOUNT) VALUES (?, ?, ?, ?);";
-  private static final String QUERY_SELECT_ALL_GIFT_MSG = "SELECT * FROM GIFTMSG";
+  private static final String QUERY_SELECT_ALL_GIFT_MSG = "SELECT * FROM GIFTMSG ORDER BY INSERT_DATE;";
 
   @Autowired
   private JdbcTemplate jdbcTemplate;

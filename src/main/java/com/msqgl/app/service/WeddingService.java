@@ -40,16 +40,26 @@ public class WeddingService {
                           final BigDecimal amount) throws SQLException, ClassNotFoundException {
     final Gift gift = giftDao.getGiftFromId(idGift);
     if (gift != null) {
+      final BigDecimal newConsumedPrice = gift.getConsumedPrice() != null ? amount.add(gift.getConsumedPrice()) : amount;
+      checkPrice(gift, newConsumedPrice);
+      giftDao.updateConsumedPrice(idGift, newConsumedPrice);
+
       final Msg msgObj = new Msg();
       msgObj.setIdGift(idGift);
       msgObj.setMsg(msg);
       msgObj.setSender(sender);
       msgObj.setAmount(amount);
       msgDao.saveMsg(msgObj);
-      final BigDecimal newConsumedPrice = gift.getConsumedPrice() != null ? amount.add(gift.getConsumedPrice()) : amount;
-      giftDao.updateConsumedPrice(idGift, newConsumedPrice);
     } else {
       throw new IllegalStateException(String.format("Gift with idGift=%s not found.", idGift));
+    }
+  }
+
+  private void checkPrice(final Gift gift,
+                          final BigDecimal newConsumedPrice) {
+    if (gift.getTotalPrice() != null && newConsumedPrice.compareTo(gift.getTotalPrice()) < 0) {
+      throw new IllegalStateException(
+          String.format("There is a problem with price. Gift total is %s, and the new consumedPrice is %s", gift.getTotalPrice(), newConsumedPrice));
     }
   }
 

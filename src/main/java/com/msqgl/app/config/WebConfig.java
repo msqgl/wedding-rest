@@ -2,7 +2,6 @@ package com.msqgl.app.config;
 
 import com.google.common.net.MediaType;
 import com.msqgl.app.model.Gift;
-import com.msqgl.app.model.Msg;
 import com.msqgl.app.model.Response;
 import com.msqgl.app.service.WeddingService;
 import com.msqgl.app.utils.ValidationUtils;
@@ -82,14 +81,6 @@ public class WebConfig {
   }
 
   private void setupRoutes() {
-    get("/", (request, response) -> "Hello Spring!");
-
-    get("/", (request, response) -> "Hello Raspberry!");
-
-    get("/log", (request, response) -> {
-      LOG.info("Hello Log!");
-      return "Hello Log!";
-    });
 
     get("/getAllGift.json", (req, res) -> {
       final List<Gift> allGift = service.getAllGift();
@@ -110,11 +101,6 @@ public class WebConfig {
         resp = Response.KO();
       }
       return resp.toJson();
-    });
-
-    get("/getAllMsg.json", (request, response) -> {
-      final List<Msg> allMsg = service.getAllMsg();
-      return Response.OK(allMsg).toJson();
     });
 
     get("/getPdf.pdf", (request, response) -> {
