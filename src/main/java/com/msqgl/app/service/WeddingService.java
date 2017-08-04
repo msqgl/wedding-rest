@@ -57,7 +57,7 @@ public class WeddingService {
 
   private void checkPrice(final Gift gift,
                           final BigDecimal newConsumedPrice) {
-    if (gift.getTotalPrice() != null && newConsumedPrice.compareTo(gift.getTotalPrice()) < 0) {
+    if (gift.getTotalPrice() != null && gift.getTotalPrice().compareTo(newConsumedPrice) < 0) {
       throw new IllegalStateException(
           String.format("There is a problem with price. Gift total is %s, and the new consumedPrice is %s", gift.getTotalPrice(), newConsumedPrice));
     }
