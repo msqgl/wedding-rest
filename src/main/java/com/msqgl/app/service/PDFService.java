@@ -61,7 +61,7 @@ public class PDFService {
     final List<Msg> allMsg = msgDao.getAllMsg();
     PdfPTable table = new PdfPTable(4);
     table.setWidthPercentage(100);
-    table.setWidths(new int[]{25, 25, 25, 25});
+    table.setWidths(new int[]{20, 20, 20, 20});
     PdfPCell cell;
 
     cell = new PdfPCell(new Phrase("Regalo", FONT_TABLE_HEADER));
@@ -84,7 +84,14 @@ public class PDFService {
     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
     table.addCell(cell);
 
+    cell = new PdfPCell(new Phrase("Data", FONT_TABLE_HEADER));
+    cell.setBackgroundColor(GREY);
+    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+    table.addCell(cell);
+
     BigDecimal total = new BigDecimal(0);
+
+    final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     for (int i = 0; i < allMsg.size(); i++) {
       final Msg msg = allMsg.get(i);
@@ -108,6 +115,11 @@ public class PDFService {
       table.addCell(cell);
 
       cell = new PdfPCell(new Phrase(String.valueOf(msg.getAmount()) + " €"));
+      cell.setBackgroundColor(color);
+      cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(dateFormat.format(msg.getInsertDate())));
       cell.setBackgroundColor(color);
       cell.setHorizontalAlignment(Element.ALIGN_CENTER);
       table.addCell(cell);
