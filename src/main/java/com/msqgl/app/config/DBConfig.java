@@ -25,8 +25,9 @@ public class DBConfig {
     final String database = env.getRequiredProperty("db.database");
     final String username = env.getRequiredProperty("db.user");
     final String password = env.getRequiredProperty("db.password");
+    final String params = env.getRequiredProperty("db.params");
     dataSource.setDriverClassName(driver);
-    dataSource.setUrl(url + "/" + database);
+    dataSource.setUrl(url + "/" + database + "?" + params);
     dataSource.setUsername(username);
     dataSource.setPassword(password);
     return dataSource;
