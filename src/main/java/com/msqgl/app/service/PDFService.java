@@ -99,7 +99,7 @@ public class PDFService {
       total = total.add(msg.getAmount());
 
       final Gift gift = giftDao.getGiftFromId(msg.getIdGift());
-      cell = new PdfPCell(new Phrase(gift.getTitle()));
+      cell = new PdfPCell(new Phrase(gift != null ? gift.getTitle() : "?!?"));
       cell.setBackgroundColor(color);
       cell.setHorizontalAlignment(Element.ALIGN_CENTER);
       table.addCell(cell);
@@ -125,8 +125,9 @@ public class PDFService {
       table.addCell(cell);
     }
 
+    final BigDecimal avg = total.compareTo(BigDecimal.ZERO) > 0 ? total.divide(new BigDecimal(allMsg.size()), RoundingMode.HALF_UP) : BigDecimal.ZERO;
     LOG.info("Totale incassato: {}", total);
-    LOG.info("Media regalo: {}", total.divide(new BigDecimal(allMsg.size()), RoundingMode.HALF_UP));
+    LOG.info("Media regalo: {}", avg);
     LOG.info("Numero di regali: {}", allMsg.size());
 
     Paragraph main = new Paragraph();
@@ -134,7 +135,7 @@ public class PDFService {
     final Paragraph totale = new Paragraph("Totale incassato " + String.valueOf(total) + " €", FONT_SUBTITLE);
     main.add(totale);
     addEmptyLine(main, 1);
-    final Paragraph media = new Paragraph("Media regalo " + total.divide(new BigDecimal(allMsg.size()), RoundingMode.HALF_UP) + " €", FONT_SUBTITLE);
+    final Paragraph media = new Paragraph("Media regalo " + avg + " €", FONT_SUBTITLE);
     main.add(media);
     addEmptyLine(main, 1);
     final Paragraph count = new Paragraph("Numero di regali " + allMsg.size(), FONT_SUBTITLE);

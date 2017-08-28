@@ -1,7 +1,10 @@
 package com.msqgl.app.dao;
 
 import com.msqgl.app.model.Gift;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -11,6 +14,8 @@ import java.util.List;
 
 @Repository
 public class GiftDao {
+
+  private static final Logger LOG = LoggerFactory.getLogger(GiftDao.class);
 
   private static final String QUERY_SELECT_ALL_GIFT = "SELECT * FROM GIFT ORDER BY INDEX_ORDER;";
   private static final String QUERY_SELECT_FROM_ID = "SELECT * FROM GIFT WHERE ID_GIFT = ?;";
@@ -24,7 +29,13 @@ public class GiftDao {
   }
 
   public Gift getGiftFromId(final String giftId) {
-    return (Gift) jdbcTemplate.queryForObject(QUERY_SELECT_FROM_ID, new Object[]{giftId}, new BeanPropertyRowMapper(Gift.class));
+    try {
+      final Gift gift = (Gift) jdbcTemplate.queryForObject(QUERY_SELECT_FROM_ID, new Object[]{giftId}, new BeanPropertyRowMapper(Gift.class));
+      return gift;
+    } catch (EmptyResultDataAccessException e) {
+      LOG.error("EmptyResultDataAccessException in function getGiftFromId, with giftId '{}'" + giftId, e.getMessage());
+      return null;
+    }
   }
 
   public void updateConsumedPrice(final String giftId,
