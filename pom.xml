@@ -39,7 +39,7 @@
     <commons-lang3.version>3.6</commons-lang3.version>
     <persistence-api.version>1.0.2</persistence-api.version>
     <mysql-connector-java.version>6.0.6</mysql-connector-java.version>
-    <spark-core.version>2.5</spark-core.version>
+    <spark-core.version>2.9.4</spark-core.version>
     <guava.version>22.0</guava.version>
     <itext.version>2.1.7</itext.version>
   </properties>
